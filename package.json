@@ -1,0 +1,19 @@
+{
+  "name": "betterbun",
+  "version": "0.1.0",
+  "description": "A blogging application",
+  "main": "server.js",
+  "keywords": [
+    "blog",
+    "node",
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "Aashis Kishore <aashiskishore@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "14.15.4"
+  }
+}
