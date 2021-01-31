@@ -1,2 +1,5 @@
 # IDE specific files and directories
 .vscode/
+
+# Node specific files and directories
+node_modules/
