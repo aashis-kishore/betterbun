@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A blogging application",
   "main": "server.js",
+  "scripts": {
+    "start": "pm2 reload ecosystem.config.js --env production",
+    "dev": "pm2-dev start ecosystem.config.js --env development"
+  },
   "keywords": [
     "blog",
     "node",
@@ -21,6 +25,7 @@
     "pm2": "^4.5.4"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.20",
     "eslint": "^7.19.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
