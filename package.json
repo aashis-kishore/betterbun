@@ -1,5 +1,5 @@
 {
-  "name": "betterbun",
+  "name": "betterbun-api",
   "version": "0.1.0",
   "description": "A blogging application",
   "main": "server.js",
