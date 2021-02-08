@@ -3,7 +3,7 @@ module.exports = {
     name: 'betterbun-api',
     script: 'server.js',
     exec_mode: 'cluster',
-    instances: 0,
+    instances: 1,
     wait_ready: true,
     listen_timeout: 10000,
     kill_timeout: 5000,
