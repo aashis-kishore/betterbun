@@ -4,8 +4,9 @@
   "description": "A blogging application",
   "main": "server.js",
   "scripts": {
-    "start": "pm2 reload ecosystem.config.js --env production",
-    "dev": "pm2-dev start ecosystem.config.js --env development"
+    "start": "node server.js",
+    "pm2:prod": "pm2 reload ecosystem.config.js --env production",
+    "pm2:dev": "pm2-dev start ecosystem.config.js --env development"
   },
   "keywords": [
     "blog",
