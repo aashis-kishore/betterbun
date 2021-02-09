@@ -1,0 +1,31 @@
+version: '3'
+services:
+  betterbun-api:
+    image: "node:14"
+    build: .
+    container_name: "betterbun-api"
+    environment:
+      NODE_ENV: development
+      NODE_PATH: /
+    ports:
+      - "3000:3000"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:4.2.12-bionic
+    container_name: "betterbun-api-mongodb"
+    volumes:
+      - betterbun-api-data:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --logpath=/dev/null
+volumes:
+  betterbun-api-data:
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
