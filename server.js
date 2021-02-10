@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const colors = require('colors');
 const app = require('./app');
 
 const listener = app.listen(process.env.PORT || app.get('PORT'), () => {
@@ -20,7 +21,7 @@ process.on('SIGINT', () => {
         console.info('Disposing server, bye');
         process.exit(0);
       }).catch(err => {
-        console.error(`Failed to close connection to db: ${err}`);
+        console.error(colors.red(`Failed to close connection to db: ${err}`));
 
         console.info('Disposing server, bye');
         process.exit(-1);
