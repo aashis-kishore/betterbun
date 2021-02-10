@@ -8,6 +8,7 @@ WORKDIR /var/betterbun-api
 
 COPY config/ /var/betterbun-api/config/
 COPY controllers /var/betterbun-api/controllers/
+COPY lib/ /var/betterbun-api/lib/
 COPY models/ /var/betterbun-api/models/
 COPY routes/ /var/betterbun-api/routes/
 COPY services/ /var/betterbun-api/services/
@@ -22,4 +23,5 @@ RUN npm install
 VOLUME /var/betterbun-api/data
 
 EXPOSE 3000
-ENTRYPOINT ["npm", "run", "pm2:prod"]
+
+ENTRYPOINT ["npm", "run", "dev"]

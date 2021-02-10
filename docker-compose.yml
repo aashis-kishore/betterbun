@@ -5,8 +5,10 @@ services:
     build: .
     container_name: "betterbun-api"
     environment:
-      NODE_ENV: development
-      NODE_PATH: /
+      - NODE_ENV=development
+      - NODE_PATH=/
+    volumes:
+      - .:/var/betterbun-api
     ports:
       - "3000:3000"
     links:
@@ -16,6 +18,9 @@ services:
   mongodb:
     image: mongo:4.2.12-bionic
     container_name: "betterbun-api-mongodb"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=imtheadmin
     volumes:
       - betterbun-api-data:/data/db
     ports:
