@@ -6,3 +6,7 @@ node_modules/
 
 # Environment files
 env.yaml
+
+# Local Settings
+settingsLocal.json
+
