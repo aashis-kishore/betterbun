@@ -24,7 +24,7 @@ process.on('SIGINT', () => {
         console.error(colors.red(`Failed to close connection to db: ${err}`));
 
         console.info('Disposing server, bye');
-        process.exit(-1);
+        process.exit(1);
       });
   });
 });
