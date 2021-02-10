@@ -1,0 +1,13 @@
+{
+  "PORT": 3000,
+  "DB_SCHEME": "",
+  "DB_USER": "",
+  "DB_PASSWORD": "",
+  "DB_HOST": "",
+  "DB_TEST_NAME": "",
+  "DB_PROD_NAME": "",
+  "DB_PARAMS": "",
+  "DB_URI": "",
+  "SECRET_COOKIE": "",
+  "SECRET_SESSION": ""
+}

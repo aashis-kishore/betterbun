@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "DB_USER": {
+      "type": "string",
+      "maxLength": 24
+    },
+    "DB_PASSWORD": {
+      "type": "string",
+      "maxLength": 24
+    },
+    "DB_HOST": {
+      "type": "string",
+      "maxLength": 48,
+      "default": "mongodb"
+    },
+    "DB_SCHEME": {
+      "type": "string",
+      "maxLength": 24,
+      "default": "mongodb"
+    },
+    "DB_PROD_NAME": {
+      "type": "string",
+      "maxLength": 24
+    },
+    "DB_TEST_NAME": {
+      "type": "string",
+      "maxLength": 24
+    },
+    "DB_PORT": {
+      "type": "number"
+    },
+    "DB_URI": {
+      "type": "string"
+    },
+    "DB_PARAMS": {
+      "type": "string"
+    },
+    "PORT": {
+      "type": "number",
+      "default": 3000
+    },
+    "SECRET_COOKIE": {
+      "type": "string"
+    },
+    "SECRET_SESSION": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
