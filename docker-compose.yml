@@ -11,8 +11,6 @@ services:
       - .:/var/betterbun-api
     ports:
       - "3000:3000"
-    links:
-      - mongodb
     depends_on:
       - mongodb
   mongodb:
