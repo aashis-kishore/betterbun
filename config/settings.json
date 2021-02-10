@@ -7,7 +7,5 @@
   "DB_TEST_NAME": "",
   "DB_PROD_NAME": "",
   "DB_PARAMS": "",
-  "DB_URI": "",
-  "SECRET_COOKIE": "",
-  "SECRET_SESSION": ""
+  "DB_URI": ""
 }
