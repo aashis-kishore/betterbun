@@ -3,3 +3,6 @@
 
 # Node specific files and directories
 node_modules/
+
+# Environment files
+env.yaml
