@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const app = require('./app');
 
 const listener = app.listen(process.env.PORT || 3000, () => {
@@ -11,6 +12,18 @@ const listener = app.listen(process.env.PORT || 3000, () => {
 // Graceful shutdown
 process.on('SIGINT', () => {
   // Clear everything needed.
-  console.info('Disposing server, bye');
-  listener.close(() => process.exit(0));
+  listener.close(() => {
+    // Close connection to db.
+    mongoose.connection
+      .close(true)
+      .then(() => {
+        console.info('Disposing server, bye');
+        process.exit(0);
+      }).catch(err => {
+        console.error(`Failed to close connection to db: ${err}`);
+
+        console.info('Disposing server, bye');
+        process.exit(-1);
+      });
+  });
 });
