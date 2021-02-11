@@ -56,7 +56,7 @@ initDb(getDbUri(config))
 app.set('env', process.env.NODE_ENV);
 
 // Make PORT available to server
-app.set('PORT', config.PORT);
+// app.set('PORT', config.PORT);
 
 // Create the session store
 const store = new MongoStore({
