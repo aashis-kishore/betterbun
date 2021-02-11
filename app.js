@@ -30,11 +30,12 @@ const ajv = new Ajv({ useDefaults: true });
 const config = getConfig();
 
 // Validate settings
+console.info('Validating configurations against schema');
 const configValid = ajv.validate(require('./config/settingsSchema'), config);
 if (!configValid) {
   console.error(colors.red(`Invalid settings.json: ${ajv.errorsText()}`));
 
-  // process.exit(2);
+  process.exit(2);
 }
 
 // Betterbun is born
@@ -96,6 +97,7 @@ app.use(compression({
 
 // Session object
 const sess = {
+  name: 'sessionId',
   resave: false,
   saveUninitialized: false,
   secret: config.SECRET_SESSION,
@@ -110,7 +112,7 @@ const sess = {
 // Choose secure cookie only in production
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
-  sess.cookie.secure = true;
+  sess.cookie.secure = false; // should be true in producion
 }
 
 // Use session
