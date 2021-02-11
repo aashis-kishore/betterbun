@@ -34,7 +34,7 @@ const configValid = ajv.validate(require('./config/settingsSchema'), config);
 if (!configValid) {
   console.error(colors.red(`Invalid settings: ${ajv.errorsText()}`));
 
-  process.exit(2);
+  // process.exit(2);
 }
 
 // Betterbun is born
