@@ -103,7 +103,6 @@ const sess = {
   secret: config.SECRET_SESSION,
   cookie: {
     httpOnly: true,
-    sameSite: 'Strict',
     maxAge: 24 * 60 * 60 * 1000 // 24 hrs or 1 day
   },
   store: store
