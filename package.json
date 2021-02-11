@@ -4,7 +4,6 @@
   "description": "A blogging application",
   "main": "server.js",
   "scripts": {
-    "n:prod": "node server.js",
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev": "pm2-dev start ecosystem.config.js --env development",
     "test": "jest ."

@@ -32,7 +32,7 @@ const config = getConfig();
 // Validate settings
 const configValid = ajv.validate(require('./config/settingsSchema'), config);
 if (!configValid) {
-  console.error(colors.red(`Invalid settings: ${ajv.errorsText()}`));
+  console.error(colors.red(`Invalid settings.json: ${ajv.errorsText()}`));
 
   // process.exit(2);
 }
@@ -56,7 +56,7 @@ initDb(getDbUri(config))
 app.set('env', process.env.NODE_ENV);
 
 // Make PORT available to server
-// app.set('PORT', config.PORT);
+app.set('PORT', config.PORT);
 
 // Create the session store
 const store = new MongoStore({

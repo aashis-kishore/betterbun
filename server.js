@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const colors = require('colors');
 const app = require('./app');
 
-const listener = app.listen(process.env.PORT || 3000, () => {
+const listener = app.listen(process.env.PORT || app.get('PORT'), () => {
   console.info('Listening on port ' + listener.address().port);
   // Inform pm2 that the app is ready to be served
   if (process.send) {
