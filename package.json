@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "ajv": "^7.0.4",
+    "ajv-formats": "^1.5.1",
     "bcrypt": "^5.0.0",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
