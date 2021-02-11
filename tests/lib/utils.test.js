@@ -7,20 +7,20 @@ describe('getDbUri', () => {
     config = getConfig();
   });
 
-  test('should return \'DB_URI\'', () => {
-    // Save original DB_URI
+  test('should return \'dbUri\'', () => {
+    // Save original dbUri
     const backupConfig = { ...config };
 
     const newDbUri = 'mongodb://localhost/betterbun-test';
 
     // Replace with test values
-    config.DB_URI = newDbUri;
-    config.DB_SCHEME = '';
-    config.DB_HOST = '';
+    config.dbUri = newDbUri;
+    config.dbScheme = '';
+    config.dbHost = '';
 
     expect(getDbUri(config)).toMatch(newDbUri);
 
-    // Restore original DB_URI
+    // Restore original dbUri
     config = backupConfig;
   });
 
@@ -29,9 +29,9 @@ describe('getDbUri', () => {
     const backupConfig = { ...config };
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_SCHEME = '';
-    config.DB_HOST = '';
+    config.dbUri = '';
+    config.dbScheme = '';
+    config.dbHost = '';
 
     expect(getDbUri(config)).toBeFalsy();
 
@@ -39,16 +39,16 @@ describe('getDbUri', () => {
     config = backupConfig;
   });
 
-  test('URI should contain \'DB_SCHEME\' and \'DB_HOST\'', () => {
+  test('URI should contain \'dbScheme\' and \'dbHost\'', () => {
     // Save originals
     const backupConfig = { ...config };
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_SCHEME = 'mongodb';
-    config.DB_HOST = 'localhost';
-    config.DB_PORT = undefined;
-    config.DB_TEST_NAME = '';
+    config.dbUri = '';
+    config.dbScheme = 'mongodb';
+    config.dbHost = 'localhost';
+    config.dbPort = undefined;
+    config.dbTestName = '';
 
     expect(getDbUri(config)).toMatch('mongodb://localhost');
 
@@ -56,16 +56,16 @@ describe('getDbUri', () => {
     config = backupConfig;
   });
 
-  test('URI should contain \'DB_PORT\'', () => {
+  test('URI should contain \'dbPort\'', () => {
     // Save originals
     const backupConfig = { ...config };
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_SCHEME = 'mongodb';
-    config.DB_HOST = 'localhost';
-    config.DB_PORT = 1234;
-    config.DB_TEST_NAME = '';
+    config.dbUri = '';
+    config.dbScheme = 'mongodb';
+    config.dbHost = 'localhost';
+    config.dbPort = 1234;
+    config.dbTestName = '';
 
     expect(getDbUri(config)).toMatch('mongodb://localhost:1234');
 
@@ -73,16 +73,16 @@ describe('getDbUri', () => {
     config = backupConfig;
   });
 
-  test('URI should contain \'DB_PORT\' and \'DB_TEST_NAME\'', () => {
+  test('URI should contain \'dbPort\' and \'dbTestName\'', () => {
     // Save originals
     const backupConfig = { ...config };
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_SCHEME = 'mongodb';
-    config.DB_HOST = 'localhost';
-    config.DB_PORT = 1234;
-    config.DB_TEST_NAME = 'test';
+    config.dbUri = '';
+    config.dbScheme = 'mongodb';
+    config.dbHost = 'localhost';
+    config.dbPort = 1234;
+    config.dbTestName = 'test';
 
     expect(getDbUri(config)).toMatch('mongodb://localhost:1234/test');
 
@@ -90,16 +90,16 @@ describe('getDbUri', () => {
     config = backupConfig;
   });
 
-  test('URI should not contain \'DB_PORT\' but \'DB_TEST_NAME\'', () => {
+  test('URI should not contain \'dbPort\' but \'dbTestName\'', () => {
     // Save originals
     const backupConfig = { ...config };
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_SCHEME = 'mongodb';
-    config.DB_HOST = 'localhost';
-    config.DB_PORT = undefined;
-    config.DB_TEST_NAME = 'test';
+    config.dbUri = '';
+    config.dbScheme = 'mongodb';
+    config.dbHost = 'localhost';
+    config.dbPort = undefined;
+    config.dbTestName = 'test';
 
     expect(getDbUri(config)).toMatch('mongodb://localhost/test');
 
@@ -107,19 +107,19 @@ describe('getDbUri', () => {
     config = backupConfig;
   });
 
-  test('URI should not contain \'DB_USER\', as \'DB_PASSWORD\' is absent',
+  test('URI should not contain \'dbUser\', as \'dbPassword\' is absent',
     () => {
     // Save originals
       const backupConfig = { ...config };
 
       // Replace with test values
-      config.DB_URI = '';
-      config.DB_USER = 'admin';
-      config.DB_PASSWORD = '';
-      config.DB_SCHEME = 'mongodb';
-      config.DB_HOST = 'localhost';
-      config.DB_PORT = undefined;
-      config.DB_TEST_NAME = 'test';
+      config.dbUri = '';
+      config.dbUser = 'admin';
+      config.dbPassword = '';
+      config.dbScheme = 'mongodb';
+      config.dbHost = 'localhost';
+      config.dbPort = undefined;
+      config.dbTestName = 'test';
 
       expect(getDbUri(config)).toMatch('mongodb://localhost/test');
 
@@ -127,19 +127,19 @@ describe('getDbUri', () => {
       config = backupConfig;
     });
 
-  test('URI should not contain \'DB_PASSWORD\', as \'DB_USER\' is absent',
+  test('URI should not contain \'dbPassword\', as \'dbUser\' is absent',
     () => {
     // Save originals
       const backupConfig = { ...config };
 
       // Replace with test values
-      config.DB_URI = '';
-      config.DB_USER = '';
-      config.DB_PASSWORD = 'letmein123';
-      config.DB_SCHEME = 'mongodb';
-      config.DB_HOST = 'localhost';
-      config.DB_PORT = undefined;
-      config.DB_TEST_NAME = 'test';
+      config.dbUri = '';
+      config.dbUser = '';
+      config.dbPassword = 'letmein123';
+      config.dbScheme = 'mongodb';
+      config.dbHost = 'localhost';
+      config.dbPort = undefined;
+      config.dbTestName = 'test';
 
       expect(getDbUri(config)).toMatch('mongodb://localhost/test');
 
@@ -147,19 +147,19 @@ describe('getDbUri', () => {
       config = backupConfig;
     });
 
-  test('URI should contain \'DB_USER\' and \'DB_PASSWORD\'',
+  test('URI should contain \'dbUser\' and \'dbPassword\'',
     () => {
     // Save originals
       const backupConfig = { ...config };
 
       // Replace with test values
-      config.DB_URI = '';
-      config.DB_USER = 'admin';
-      config.DB_PASSWORD = 'letmein123';
-      config.DB_SCHEME = 'mongodb';
-      config.DB_HOST = 'localhost';
-      config.DB_PORT = undefined;
-      config.DB_TEST_NAME = 'test';
+      config.dbUri = '';
+      config.dbUser = 'admin';
+      config.dbPassword = 'letmein123';
+      config.dbScheme = 'mongodb';
+      config.dbHost = 'localhost';
+      config.dbPort = undefined;
+      config.dbTestName = 'test';
 
       const expectedUri = 'mongodb://admin:letmein123@localhost/test';
 
@@ -169,7 +169,7 @@ describe('getDbUri', () => {
       config = backupConfig;
     });
 
-  test('URI should contain \'DB_PROD_NAME\'', () => {
+  test('URI should contain \'dbProdName\'', () => {
     // Save originals
     const backupConfig = { ...config };
     const nodeEnv = process.env.NODE_ENV;
@@ -178,14 +178,14 @@ describe('getDbUri', () => {
     process.env.NODE_ENV = 'production';
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_PROD_NAME = 'proddb';
-    config.DB_USER = 'admin';
-    config.DB_PASSWORD = 'letmein123';
-    config.DB_SCHEME = 'mongodb';
-    config.DB_HOST = 'localhost';
-    config.DB_PORT = undefined;
-    config.DB_TEST_NAME = 'test';
+    config.dbUri = '';
+    config.dbProdName = 'proddb';
+    config.dbUser = 'admin';
+    config.dbPassword = 'letmein123';
+    config.dbScheme = 'mongodb';
+    config.dbHost = 'localhost';
+    config.dbPort = undefined;
+    config.dbTestName = 'test';
 
     const expectedUri = 'mongodb://admin:letmein123@localhost/proddb';
 
@@ -196,19 +196,19 @@ describe('getDbUri', () => {
     process.env.NODE_ENV = nodeEnv;
   });
 
-  test('URI should contain \'DB_PARAMS\' after \'DB_TEST_NAME\'', () => {
+  test('URI should contain \'dbParams\' after \'dbTestName\'', () => {
     // Save originals
     const backupConfig = { ...config };
 
     // Replace with test values
-    config.DB_URI = '';
-    config.DB_USER = 'admin';
-    config.DB_PASSWORD = 'letmein123';
-    config.DB_SCHEME = 'mongodb';
-    config.DB_HOST = 'localhost';
-    config.DB_PORT = undefined;
-    config.DB_TEST_NAME = 'test';
-    config.DB_PARAMS = 'foo=one&bar=two';
+    config.dbUri = '';
+    config.dbUser = 'admin';
+    config.dbPassword = 'letmein123';
+    config.dbScheme = 'mongodb';
+    config.dbHost = 'localhost';
+    config.dbPort = undefined;
+    config.dbTestName = 'test';
+    config.dbParams = 'foo=one&bar=two';
 
     const expectedUri = 'mongodb://admin:letmein123@localhost/test' +
                         '?foo=one&bar=two';

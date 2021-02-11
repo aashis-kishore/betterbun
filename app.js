@@ -66,16 +66,16 @@ const store = new MongoStore({
 });
 
 // Setup secrets
-if (!config.SECRET_COOKIE || config.SECRET_COOKIE === '') {
+if (!config.secretCookie || config.secretCookie === '') {
   const randomString = crypto.randomBytes(20).toString('hex');
-  config.SECRET_COOKIE = randomString;
-  updateConfigLocal({ SECRET_COOKIE: randomString });
+  config.secretCookie = randomString;
+  updateConfigLocal({ secretCookie: randomString });
 }
 
-if (!config.SECRET_SESSION || config.SECRET_SESSION === '') {
+if (!config.secretSession || config.secretSession === '') {
   const randomString = crypto.randomBytes(20).toString('hex');
-  config.SECRET_SESSION = randomString;
-  updateConfigLocal({ SECRET_SESSION: randomString });
+  config.secretSession = randomString;
+  updateConfigLocal({ secretSession: randomString });
 }
 
 app.use(cors());
@@ -100,7 +100,7 @@ const sess = {
   name: 'sessionId',
   resave: false,
   saveUninitialized: false,
-  secret: config.SECRET_SESSION,
+  secret: config.secretSession,
   cookie: {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hrs or 1 day

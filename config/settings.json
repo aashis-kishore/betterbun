@@ -1,11 +1,11 @@
 {
-  "port": 3000,
-  "DB_SCHEME": "",
-  "DB_USER": "",
-  "DB_PASSWORD": "",
-  "DB_HOST": "",
-  "DB_TEST_NAME": "",
-  "DB_PROD_NAME": "",
-  "DB_PARAMS": "",
-  "DB_URI": ""
+  "dbUser": "",
+  "dbPassword": "",
+  "dbHost": "",
+  "dbScheme": "",
+  "dbProdName": "",
+  "dbTestName": "",
+  "dbUri": "",
+  "dbParams": "",
+  "port": 3000
 }
