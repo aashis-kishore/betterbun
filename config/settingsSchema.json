@@ -36,15 +36,15 @@
     "DB_PARAMS": {
       "type": "string"
     },
-    "PORT": {
-      "type": "number",
-      "default": 3000
-    },
     "SECRET_COOKIE": {
       "type": "string"
     },
     "SECRET_SESSION": {
       "type": "string"
+    },
+    "port": {
+      "type": "number",
+      "default": 3000
     }
   },
   "additionalProperties": false
