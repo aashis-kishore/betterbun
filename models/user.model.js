@@ -48,14 +48,7 @@ UserSchema.pre('save', async function (next) {
 });
 
 // Compare passwords
-UserSchema.methods.comparePassword = (candidatePassword, callback) => {
-  // bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-  //   if (err) {
-  //     return callback(err);
-  //   }
-
-  //   callback(null, isMatch);
-  // });
+UserSchema.methods.comparePassword = function (candidatePassword) {
   const cPassHash = scryptSync(candidatePassword, this.salt, 32)
     .toString('hex');
 

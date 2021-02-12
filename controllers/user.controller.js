@@ -27,3 +27,23 @@ exports.signUp = async (req, res, next) => {
     next({ errors: err, code: constants.errorCodes.BR, message });
   }
 };
+
+exports.login = async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      return res.status(200).json({ status: 'SUCCESS' });
+    }
+
+    console.info('Logging user in');
+    const user = await UserService.findUser(req.body);
+    console.log(user);
+
+    const { firstName, lastName, email } = user;
+
+    req.session.user = { firstName, lastName, email };
+
+    return res.status(200).json({ status: 'SUCCESS' });
+  } catch (err) {
+    next({ errors: err.message || err, code: constants.errorCodes.NA });
+  }
+};
