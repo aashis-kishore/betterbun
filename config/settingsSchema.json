@@ -45,7 +45,14 @@
     "port": {
       "type": "number",
       "default": 3000
+    },
+    "schemaBaseLoc": {
+      "type": "string",
+      "format": "uri"
     }
   },
+  "required": [
+    "schemaBaseLoc"
+  ],
   "additionalProperties": false
 }
