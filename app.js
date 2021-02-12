@@ -119,9 +119,6 @@ const sess = {
   store: store
 };
 
-// Use routes
-app.use('/api/user', userRoute);
-
 // Choose secure cookie only in production
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
@@ -138,6 +135,9 @@ if (app.get('env') !== 'production') {
     next();
   });
 }
+
+// Use routes
+app.use('/api/user', userRoute);
 
 // Test route, to be modified or removed.
 app.get('/', (req, res) => {
