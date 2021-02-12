@@ -15,6 +15,10 @@ const { getConfig, updateConfigLocal } = require('./lib/config');
 const { getDbUri } = require('./lib/utils');
 const { initDb } = require('./lib/db');
 
+// Routes
+const userRoute = require('./routes/user.route');
+const constants = require('./lib/constants');
+
 // Load configuration from env file
 const pathToEnvFile = 'env.yaml';
 if (fs.existsSync(pathToEnvFile)) {
@@ -24,7 +28,11 @@ if (fs.existsSync(pathToEnvFile)) {
 }
 
 // For Validating settings(configurations)
-const ajv = new Ajv({ useDefaults: true });
+const ajv = new Ajv({ useDefaults: true, allErrors: true });
+// Add errors
+require('ajv-errors')(ajv);
+// Add additional ajv formats
+require('ajv-formats')(ajv);
 
 // Load configurations
 const config = getConfig();
@@ -40,6 +48,9 @@ if (!configValid) {
 
 // Betterbun is born
 const app = express();
+
+// For validating request params and others
+app.validator = require('./lib/validator')(ajv);
 
 // Initialize database
 initDb(getDbUri(config))
@@ -108,6 +119,9 @@ const sess = {
   store: store
 };
 
+// Use routes
+app.use('/api/user', userRoute);
+
 // Choose secure cookie only in production
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
@@ -138,31 +152,31 @@ app.get('/', (req, res) => {
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Resource not found');
-  err.status = 404;
+  const err = {
+    errors: [{ message: constants.errorCodes.RNF.description }],
+    code: constants.errorCodes.RNF
+  };
+
   next(err);
 });
 
 // Handle routing errors
 app.use((err, req, res, next) => {
-  console.warn(colors.yellow(err.stack));
-
-  if (err && err.code === 'EACCES') {
-    return res.status(400).json({
-      message: 'File upload error. Please try again'
-    });
-  }
+  console.warn(colors.yellow(
+    `${err.stack
+      ? err.stack
+      : require('util').inspect(err, { depth: null })}`
+  ));
 
   const response = {
-    message: err.message,
-    error: {}
+    status: 'FAILURE'
   };
 
   if (app.get('env') !== 'production') {
-    response.error = err;
+    response.errors = err.errors;
   }
 
-  return res.status(err.status || 500).json(response);
+  return res.status(err.code.status || 500).json(response);
 });
 
 module.exports = app;
