@@ -1,15 +1,20 @@
+const mongoose = require('mongoose');
 const supertest = require('supertest');
+
 const app = require('../../app');
+const { initDb } = require('../../lib/db');
 
 const request = supertest(app);
 
 describe('Requests to known existent resources', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
+  beforeAll(async () => {
+    const dbUri = 'mongodb+srv://imarkus:letmein123@learn-jasoj.mongodb.net/betterbun-test?retryWrites=true&w=majority';
+
+    await initDb(dbUri);
   });
 
-  afterEach(() => {
-    jest.useRealTimers();
+  afterAll(async () => {
+    await mongoose.connection.close(true);
   });
 
   it('should have response status 404', async () => {
@@ -21,7 +26,6 @@ describe('Requests to known existent resources', () => {
   it('should have expected response message', async () => {
     const response = await request.get('/non/existent/route');
 
-    expect(response.header['Content-Type']).toMatch(/json/);
-    expect(response.body.message).toMatch('Resource not found');
+    expect(response.body.errors[0].message).toMatch('Resource not found');
   });
 });
