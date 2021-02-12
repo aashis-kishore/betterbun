@@ -31,6 +31,7 @@ exports.signUp = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     if (req.session.user) {
+      console.info('Logging user from session');
       return res.status(200).json({ status: 'SUCCESS' });
     }
 
@@ -46,4 +47,15 @@ exports.login = async (req, res, next) => {
   } catch (err) {
     next({ errors: err.message || err, code: constants.errorCodes.NA });
   }
+};
+
+exports.logout = (req, res, next) => {
+  if (req.session.user) {
+    // Clear user from session
+    delete req.session.user;
+
+    return res.status(200).json({ status: 'SUCCESS' });
+  }
+
+  return next({ errors: 'Login then logout', code: constants.errorCodes.BR });
 };
