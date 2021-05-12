@@ -4,23 +4,20 @@ ENV NODE_VERSION 14.15.4
 
 RUN apk add --no-cache bash
 
-WORKDIR /var/betterbun-api
+WORKDIR /var/betterbun-webservice
 
-COPY config/ /var/betterbun-api/config/
-COPY controllers /var/betterbun-api/controllers/
-COPY lib/ /var/betterbun-api/lib/
-COPY models/ /var/betterbun-api/models/
-COPY routes/ /var/betterbun-api/routes/
-COPY services/ /var/betterbun-api/services/
-COPY app.js /var/betterbun-api/
-COPY server.js /var/betterbun-api/
-COPY ecosystem.config.js /var/betterbun-api/
-
-COPY package.json /var/betterbun-api/
+COPY src .
+COPY tests .
+COPY .eslintrc.json .
+COPY docker-compose.yml .
+COPY Dockerfile .
+COPY ecosystem.config.js .
+COPY jest.config.js .
+COPY jsconfig.json .
+COPY package.json .
+COPY Procfile .
 
 RUN npm install
-
-VOLUME /var/betterbun-api/data
 
 EXPOSE 3000
 
