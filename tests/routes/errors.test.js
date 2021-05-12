@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const supertest = require('supertest');
 
-const app = require('../../app');
-const { initDb } = require('../../lib/db');
+const app = require('../../src/app');
+const { initDb } = require('../../src/lib/db');
 
 const request = supertest(app);
 
 describe('Requests to known existent resources', () => {
   beforeAll(async () => {
-    const dbUri = 'mongodb+srv://imarkus:letmein123@learn-jasoj.mongodb.net/betterbun-test?retryWrites=true&w=majority';
+    const dbUri = 'mongodb://mongoadmin:imtheadmin@mongodb/betterbun-db?authSource=admin';
 
     await initDb(dbUri);
   });

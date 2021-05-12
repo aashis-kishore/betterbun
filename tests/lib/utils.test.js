@@ -1,5 +1,5 @@
-const { getConfig } = require('../../lib/config');
-const { getDbUri } = require('../../lib/utils');
+const { getConfig } = require('../../src/lib/config');
+const { getDbUri } = require('../../src/lib/utils');
 
 describe('getDbUri', () => {
   let config;
