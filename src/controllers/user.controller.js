@@ -1,6 +1,8 @@
 const UserService = require('../services/user.service');
 const constants = require('../lib/constants');
 
+const { info } = require('../lib/utils');
+
 exports.signUp = async (req, res, next) => {
   const isValid = req.app.validator.user.signUp(req.body);
 
@@ -15,13 +17,13 @@ exports.signUp = async (req, res, next) => {
   }
 
   try {
-    console.info('Creating new user');
+    info('Creating new user');
 
     const user = await UserService.createUser(req.body);
 
-    console.log(user);
+    info(user);
 
-    return res.status(201).json({ status: 'SUCCESS', user: user });
+    return res.status(201).json({ user });
   } catch (err) {
     const message = 'E-mail taken';
     next({ errors: err, code: constants.errorCodes.BR, message });
@@ -43,19 +45,19 @@ exports.login = async (req, res, next) => {
 
   try {
     if (req.session.user) {
-      console.info('Logging user from session');
-      return res.status(200).json({ status: 'SUCCESS' });
+      info('User is already logged in');
+      return res.status(200).json({ user: req.session.user });
     }
 
-    console.info('Logging user in');
+    info('Logging user in');
     const user = await UserService.findUser(req.body);
-    console.log(user);
+    info(user);
 
     const { firstName, lastName, email } = user;
 
     req.session.user = { firstName, lastName, email };
 
-    return res.status(200).json({ status: 'SUCCESS' });
+    return res.status(200).json({ user: req.session.user });
   } catch (err) {
     next({ errors: err.message || err, code: constants.errorCodes.NA });
   }
@@ -64,10 +66,12 @@ exports.login = async (req, res, next) => {
 exports.logout = (req, res, next) => {
   if (req.session.user) {
     // Clear user from session
+    req.sessionStore.destroy(req.sessionID);
+    delete req.sessionID;
     delete req.session.user;
 
-    return res.status(200).json({ status: 'SUCCESS' });
+    return res.status(200).json({ status: 'Success' });
   }
 
-  return next({ errors: 'Login then logout', code: constants.errorCodes.BR });
+  return next({ errors: 'Not logged in', code: constants.errorCodes.BR });
 };
