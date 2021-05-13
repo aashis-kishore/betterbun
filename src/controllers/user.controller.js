@@ -45,8 +45,17 @@ exports.login = async (req, res, next) => {
 
   try {
     if (req.session.user) {
-      info('User is already logged in');
-      return res.status(200).json({ user: req.session.user });
+      if (req.session.user.email === req.body.email) {
+        info('User is already logged in');
+        return res.status(200).json({ user: req.session.user });
+      }
+
+      const err = {
+        errors: 'Already logged in with different credentials',
+        code: constants.errorCodes.FRBDN
+      };
+
+      return next(err);
     }
 
     info('Logging user in');
@@ -73,5 +82,5 @@ exports.logout = (req, res, next) => {
     return res.status(200).json({ status: 'Success' });
   }
 
-  return next({ errors: 'Not logged in', code: constants.errorCodes.BR });
+  return next({ errors: 'Not logged in', code: constants.errorCodes.FRBDN });
 };

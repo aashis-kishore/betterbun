@@ -10,6 +10,10 @@ module.exports = {
       status: 400,
       description: 'Bad request'
     },
+    FRBDN: {
+      status: 403,
+      description: 'Forbidden'
+    },
     RNF: {
       status: 404,
       description: 'Resource not found'
