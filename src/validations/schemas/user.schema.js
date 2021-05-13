@@ -1,7 +1,7 @@
 const schemaBaseLoc = require('../../lib/config').getConfig().schemaBaseLoc;
 
-module.exports = {
-  $id: `${schemaBaseLoc}/user.signup.js`,
+exports.signUp = {
+  $id: `${schemaBaseLoc}/user.signup.schema.js`,
   type: 'object',
   properties: {
     firstName: {

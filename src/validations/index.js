@@ -1,9 +1,9 @@
 const validator = {};
 
 module.exports = (ajv) => {
-  const userSignUp = require('./schemas/userSignUp.schema');
+  const user = require('./schemas/user.schema');
 
-  validator.userSignUp = ajv.compile(userSignUp);
+  validator.userSignUp = ajv.compile(user.signUp);
 
   return validator;
 };
