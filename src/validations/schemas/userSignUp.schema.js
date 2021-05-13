@@ -1,4 +1,4 @@
-const schemaBaseLoc = require('../config').getConfig().schemaBaseLoc;
+const schemaBaseLoc = require('../../lib/config').getConfig().schemaBaseLoc;
 
 module.exports = {
   $id: `${schemaBaseLoc}/user.signup.js`,

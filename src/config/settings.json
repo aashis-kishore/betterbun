@@ -8,5 +8,5 @@
   "dbUri": "",
   "dbParams": "",
   "port": 3000,
-  "schemaBaseLoc": "https://github.com/aashis-kishore/betterbun-api/lib/schemas"
+  "schemaBaseLoc": "https://github.com/aashis-kishore/betterbun-api/src/validations/schemas"
 }

@@ -53,7 +53,7 @@ if (!configValid) {
 const app = express();
 
 // For validating request params and others
-app.validator = require('./lib/validator')(ajv);
+app.validator = require('./validations')(ajv);
 
 // Initialize database
 const connectDb = async () => {
