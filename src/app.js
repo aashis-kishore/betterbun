@@ -77,12 +77,6 @@ app.set('env', process.env.NODE_ENV);
 // Make PORT available to server
 app.set('port', config.port);
 
-// Create the session store
-const store = new MongoStore({
-  uri: getDbUri(config),
-  collection: 'sessions'
-});
-
 // Setup secrets
 if (!config.secretCookie || config.secretCookie === '') {
   const randomString = crypto.randomBytes(20).toString('hex');
@@ -96,22 +90,15 @@ if (!config.secretSession || config.secretSession === '') {
   updateConfigLocal({ secretSession: randomString });
 }
 
-app.use(cors());
-// Protection against common vulnerabilities
-app.use(helmet());
-// Logger morgan
-app.use(morgan('dev'));
-// Compress responses
-app.use(compression({
-  filter: (req, res) => {
-    if (req.headers['x-no-compression']) {
-      return false;
-    }
+// Create the session store
+let store;
 
-    // fallback to standard filter function
-    return compression.filter(req, res);
-  }
-}));
+if (app.get('env') !== 'test') {
+  store = new MongoStore({
+    uri: getDbUri(config),
+    collection: 'sessions'
+  });
+}
 
 // Session object
 const sess = {
@@ -134,6 +121,23 @@ if (app.get('env') === 'production') {
 
 // Use session
 app.use(session(sess));
+
+app.use(cors());
+// Protection against common vulnerabilities
+app.use(helmet());
+// Logger morgan
+app.use(morgan('dev'));
+// Compress responses
+app.use(compression({
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) {
+      return false;
+    }
+
+    // fallback to standard filter function
+    return compression.filter(req, res);
+  }
+}));
 
 // No caching while not on production
 if (app.get('env') !== 'production') {
