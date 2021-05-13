@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   betterbun-webservice:
     image: "node:14"
@@ -16,7 +16,6 @@ services:
       - mongodb
   mongodb:
     image: mongo:4.2.12-bionic
-    restart: always
     container_name: "betterbun-webservice-db"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=mongoadmin
@@ -24,7 +23,7 @@ services:
     volumes:
       - betterbun-webservice-data:/data/db
     ports:
-      - 27017:27017
+      - "27017:27017"
     command: mongod --logpath=/dev/null
 volumes:
   betterbun-webservice-data:

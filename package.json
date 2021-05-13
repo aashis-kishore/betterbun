@@ -34,13 +34,13 @@
     "helmet": "^4.4.1",
     "lodash": "^4.17.20",
     "luxon": "^1.25.0",
-    "mongoose": "^5.11.15",
+    "mongoose": "^5.12.8",
     "morgan": "^1.10.0",
     "pm2": "^4.5.4",
     "yenv": "^3.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.20",
+    "@types/jest": "^26.0.23",
     "eslint": "^7.19.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",

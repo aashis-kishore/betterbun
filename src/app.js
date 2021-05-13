@@ -12,17 +12,20 @@ const compression = require('compression');
 const cors = require('cors');
 
 const { getConfig, updateConfigLocal } = require('./lib/config');
-const { getDbUri } = require('./lib/utils');
+const { getDbUri, info, error } = require('./lib/utils');
 const { initDb } = require('./lib/db');
 
 // Routes
 const userRoute = require('./routes/user.route');
-const constants = require('./lib/constants');
+
+// Middlewares
+const notFound = require('./middlewares/notFound');
+const errorHandler = require('./middlewares/errorHandler');
 
 // Load configuration from env file
 const pathToEnvFile = 'env.yaml';
 if (fs.existsSync(pathToEnvFile)) {
-  console.info(`Loading env values from: ${pathToEnvFile}`);
+  info(`Loading env values from: ${pathToEnvFile}`);
 
   process.env = yenv(pathToEnvFile, { strict: false });
 }
@@ -38,10 +41,10 @@ require('ajv-formats')(ajv);
 const config = getConfig();
 
 // Validate settings
-console.info('Validating configurations against schema');
+info('Validating configurations against schema');
 const configValid = ajv.validate(require('./config/settingsSchema'), config);
 if (!configValid) {
-  console.error(colors.red(`Invalid settings.json: ${ajv.errorsText()}`));
+  error(colors.red(`Invalid settings.json: ${ajv.errorsText()}`));
 
   process.exit(2);
 }
@@ -53,16 +56,20 @@ const app = express();
 app.validator = require('./lib/validator')(ajv);
 
 // Initialize database
-initDb(getDbUri(config))
-  .then(db => {
+const connectDb = async () => {
+  try {
+    const db = await initDb(getDbUri(config));
+
     app.db = db;
-    app.config = config;
-  })
-  .catch(err => {
-    console.error(colors.red(`Error: ${err}`));
+    app.emit('start');
+  } catch (err) {
+    console.error(err);
 
     process.exit(2);
-  });
+  }
+};
+
+connectDb();
 
 // Set environment as an attribute
 app.set('env', process.env.NODE_ENV);
@@ -151,32 +158,9 @@ app.get('/', (req, res) => {
 });
 
 // Catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = {
-    errors: [{ message: constants.errorCodes.RNF.description }],
-    code: constants.errorCodes.RNF
-  };
-
-  next(err);
-});
+app.use(notFound);
 
 // Handle routing errors
-app.use((err, req, res, next) => {
-  console.warn(colors.yellow(
-    `${err.stack
-      ? err.stack
-      : require('util').inspect(err, { depth: null })}`
-  ));
-
-  const response = {
-    status: 'FAILURE'
-  };
-
-  if (app.get('env') !== 'production') {
-    response.errors = err.errors;
-  }
-
-  return res.status(err.code.status || 500).json(response);
-});
+app.use(errorHandler);
 
 module.exports = app;
