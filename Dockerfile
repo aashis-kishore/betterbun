@@ -7,7 +7,7 @@ RUN apk add --no-cache bash
 WORKDIR /var/betterbun-webservice
 
 COPY src .
-COPY tests .
+COPY test .
 COPY .eslintrc.json .
 COPY docker-compose.yml .
 COPY Dockerfile .
