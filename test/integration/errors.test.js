@@ -2,9 +2,13 @@ const supertest = require('supertest');
 
 const app = require('../../src/app');
 
-const request = supertest(app);
-
 describe('Edge case routes', () => {
+  let request;
+
+  beforeAll(() => {
+    request = supertest(app);
+  });
+
   describe('Requests to non-existent resources', () => {
     it('should have response status 404', async (done) => {
       await request
