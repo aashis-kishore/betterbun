@@ -2,12 +2,12 @@ const UserService = require('../services/user.service');
 const constants = require('../lib/constants');
 
 exports.signUp = async (req, res, next) => {
-  const isValid = req.app.validator.userSignUp(req.body);
+  const isValid = req.app.validator.user.signUp(req.body);
 
   // If request is invalid or incomplete respond with client error
   if (!isValid) {
     const err = {
-      errors: req.app.validator.userSignUp.errors,
+      errors: req.app.validator.user.signUp.errors,
       code: constants.errorCodes.UE
     };
 
@@ -29,6 +29,18 @@ exports.signUp = async (req, res, next) => {
 };
 
 exports.login = async (req, res, next) => {
+  const isValid = req.app.validator.user.logIn(req.body);
+
+  // If request is invalid or incomplete respond with client error
+  if (!isValid) {
+    const err = {
+      errors: req.app.validator.user.logIn.errors,
+      code: constants.errorCodes.UE
+    };
+
+    return next(err);
+  }
+
   try {
     if (req.session.user) {
       console.info('Logging user from session');

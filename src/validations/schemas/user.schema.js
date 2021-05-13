@@ -1,5 +1,33 @@
 const schemaBaseLoc = require('../../lib/config').getConfig().schemaBaseLoc;
 
+exports.logIn = {
+  $id: `${schemaBaseLoc}/user.login.schema.js`,
+  type: 'object',
+  properties: {
+    email: {
+      type: 'string',
+      format: 'email',
+      maxLength: 48
+    },
+    password: {
+      type: 'string',
+      minLength: 8,
+      maxLength: 48
+    }
+  },
+  required: [
+    'email',
+    'password'
+  ],
+  additionalProperties: false,
+  errorMessage: {
+    properties: {
+      email: 'email fails to follow constraints',
+      password: 'password fails to follow constraints'
+    }
+  }
+};
+
 exports.signUp = {
   $id: `${schemaBaseLoc}/user.signup.schema.js`,
   type: 'object',
