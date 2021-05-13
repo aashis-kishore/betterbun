@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'betterbun-api',
+    name: 'betterbun-webservice',
     script: 'src/index.js',
     exec_mode: 'cluster_mode',
     instances: 1,
