@@ -7,7 +7,7 @@
     "start": "pm2-runtime start ecosystem.config.js --env production",
     "dev": "pm2-dev start ecosystem.config.js --env development",
     "test": "jest .",
-    "test:watch": "NODE_ENV=test jest . --watch --detectOpenHandles"
+    "test:watch": "jest . --watch"
   },
   "keywords": [
     "blog",
