@@ -1,5 +1,6 @@
 const colors = require('colors');
 const { warn } = require('../lib/utils');
+const constants = require('../lib/constants');
 
 module.exports = (err, req, res, next) => {
   warn(colors.yellow(
@@ -9,12 +10,18 @@ module.exports = (err, req, res, next) => {
   ));
 
   const response = {
-    status: 'FAILURE'
+    status: 'FAILURE',
+    errors: err.errors
   };
 
-  // if (app.get('env') !== 'production') {
-  response.errors = err.errors;
-  // }
+  if (!err.code) {
+    err.code = constants.errorCodes.IE;
 
-  return res.status(err.code.status || 500).json(response);
+    if (err.statusCode) {
+      err.code = { status: err.statusCode };
+      response.errors = err.message;
+    }
+  }
+
+  return res.status(err.code.status).json(response);
 };

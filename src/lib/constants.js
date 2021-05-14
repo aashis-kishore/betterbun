@@ -25,6 +25,10 @@ module.exports = {
     NA: {
       status: 406,
       description: 'Not acceptable'
+    },
+    IE: {
+      status: 500,
+      decription: 'Internal error'
     }
   }
 };
