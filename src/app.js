@@ -147,9 +147,6 @@ if (app.get('env') !== 'production') {
   });
 }
 
-// Use routes
-app.use('/api/user', userRoute);
-
 // Test route, to be modified or removed.
 app.get('/', (req, res) => {
   if (req.session.views) {
@@ -160,6 +157,9 @@ app.get('/', (req, res) => {
 
   res.send('Hello, Things look good:' + req.session.views);
 });
+
+// Use routes
+app.use('/api/user', userRoute);
 
 // Catch 404 and forward to error handler
 app.use(notFound);
